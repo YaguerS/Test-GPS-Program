@@ -1,0 +1,6 @@
+{
+  "java.import.gradle.enabled": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "gradle.nestedProjects": true,
+  "java.debug.settings.console": "internalConsole"
+}

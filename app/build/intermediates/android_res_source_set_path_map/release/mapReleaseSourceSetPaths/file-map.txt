@@ -1,0 +1,9 @@
+com.example.prueba.app-pngs-0 /home/santi/DEBEL/Mobile/Prueba/app/build/generated/res/pngs/release
+com.example.prueba.app-resValues-1 /home/santi/DEBEL/Mobile/Prueba/app/build/generated/res/resValues/release
+com.example.prueba.app-updated_navigation_xml-2 /home/santi/DEBEL/Mobile/Prueba/app/build/generated/updated_navigation_xml/release
+com.example.prueba.app-packageReleaseResources-3 /home/santi/DEBEL/Mobile/Prueba/app/build/intermediates/incremental/release/packageReleaseResources/merged.dir
+com.example.prueba.app-packageReleaseResources-4 /home/santi/DEBEL/Mobile/Prueba/app/build/intermediates/incremental/release/packageReleaseResources/stripped.dir
+com.example.prueba.app-release-5 /home/santi/DEBEL/Mobile/Prueba/app/build/intermediates/merged_res/release/mergeReleaseResources
+com.example.prueba.app-main-6 /home/santi/DEBEL/Mobile/Prueba/app/src/main/res
+com.example.prueba.app-release-7 /home/santi/DEBEL/Mobile/Prueba/app/src/release/res
+gradleHome-0 /home/santi/.gradle

@@ -1,0 +1,1 @@
+/home/santi/DEBEL/Mobile/Prueba/app/src/test/kotlin/org/example/AppTest.kt
