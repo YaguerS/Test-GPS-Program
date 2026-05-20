@@ -30,8 +30,11 @@ class PermissionManager(private val activity: ComponentActivity, private val cal
         NONE,
         FINE_GRANTED,
         BACKGROUND_GRANTED,
+        IGNORE_BATTERY_GRANTED,
         READY
     }
+
+
 
     private var state = State.NONE
 
@@ -69,21 +72,54 @@ class PermissionManager(private val activity: ComponentActivity, private val cal
     // Background location launcher
     // ----------------------------------------
     // Result logic:
-    // - granted -> READY -> callback.onReady()
+    // - granted -> proceed to ignore battery optimizations
     // - denied   -> inform callback.onDenied(BACKGROUND)
     private val backgroundLocationLauncher = activity.registerForActivityResult(
         ActivityResultContracts.RequestPermission()) {
             granted -> if (granted) {
-                state = State.READY
-                callback.onReady()
+                state = State.BACKGROUND_GRANTED
+                if (hasIgnoreBatteryOptimizations()) {
+                    state = State.READY
+                    callback.onReady()
+                } else {
+                    requestIgnoreBatteryOptimizations()
+                }
             } else {
                 state = State.FINE_GRANTED
                 callback.onDenied(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
             }
         }
 
+    // ----------------------------------------
+    // Ignore battery optimizations launcher
+    // ----------------------------------------
+    // There’s no runtime result for this; we re-check by querying the system
+    // when the user returns from the settings screen.
+    private val ignoreBatteryOptimizationsLauncher = activity.registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) {
+        if (hasIgnoreBatteryOptimizations()) {
+            state = State.READY
+            callback.onReady()
+        } else {
+            state = State.BACKGROUND_GRANTED
+            callback.onDenied(Manifest.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+        }
+    }
+
+    private fun hasIgnoreBatteryOptimizations(): Boolean {
+        val pm = activity.getSystemService(android.content.Context.POWER_SERVICE) as android.os.PowerManager
+        return pm.isIgnoringBatteryOptimizations(activity.packageName)
+    }
+
+    private fun requestIgnoreBatteryOptimizations() {
+        val intent = android.content.Intent(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS)
+        intent.data = android.net.Uri.parse("package:${activity.packageName}")
+        ignoreBatteryOptimizationsLauncher.launch(intent)
+    }
+
     /**
      * start()
+
      * ----
      * Single entry point to begin permission flow.
      * The method decides what to request based on what is already granted.
