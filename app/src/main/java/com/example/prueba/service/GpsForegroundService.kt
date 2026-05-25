@@ -5,6 +5,8 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.app.PendingIntent
+import android.app.AlarmManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +18,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
+import sun.security.util.PendingException
 
 /**
  * Foreground Android service that continuously listens for GPS location updates and logs
@@ -244,6 +247,28 @@ class GpsForegroundService : Service() {
      */
     private fun logGps(lat: Double, lon: Double, alt: Double, speed: Float, acc: Float) {
         Log.d("GPS", "LAT=$lat LON=$lon ALT=$alt SPEED=$speed ACC=$acc")
+    }
+
+        override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+
+        val restartIntent = Intent(applicationContext, GpsForegroundService::class.java).apply {
+            action = ACTION_START
+        }
+
+        val pendingIntent = android.app.PendingIntent.getService(this, 1, restartIntent,
+        android.app.PendingIntent.FLAG_IMMUTABLE)
+
+        val manager = getSystemService(Context.ALARM_SERVICE) as android.app.AlarmManager
+
+        manager.cancel(pendingIntent)
+
+        manager.setExactAndAllowWhileIdle(
+            android.app.AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis() + 1000,
+            pendingIntent
+        )
+
     }
 }
 
