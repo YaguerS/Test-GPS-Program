@@ -24,8 +24,7 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:extractNativeLibs="false"
-        android:label="Prueba"
-        android:testOnly="true" >
+        android:label="Prueba" >
         <activity
             android:name="com.example.prueba.MainActivity"
             android:exported="true" >
