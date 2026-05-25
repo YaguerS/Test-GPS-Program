@@ -3,7 +3,6 @@ import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL
 // NOTE: This file currently uses a nested Callback interface below.
 // The external imports below were added by mistake in the skeleton and can be removed.
 // Keeping this file focused: the only Callback contract used is the nested interface in this class.

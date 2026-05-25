@@ -18,7 +18,6 @@ import android.os.Looper
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
-import sun.security.util.PendingException
 
 /**
  * Foreground Android service that continuously listens for GPS location updates and logs
