@@ -34,8 +34,6 @@ class PermissionManager(private val activity: ComponentActivity, private val cal
         READY
     }
 
-
-
     private var state = State.NONE
 
     // ----------------------------------------
